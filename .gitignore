@@ -1,2 +1,11 @@
 # Project exclude paths
-/venv/
+/stanford-corenlp-full-2020-04-20/
+/tex_files/parsed_tree_vis.aux
+/tex_files/parsed_tree_vis.log
+/tex_files/parsed_tree_vis.pdf
+/tex_files/parsed_tree_vis.synctex.gz
+/tex_files/parsed_tree_vis.tex
+/tex_files/tree_vis.aux
+/tex_files/tree_vis.log
+/tex_files/tree_vis.pdf
+/tex_files/tree_vis.synctex.gz

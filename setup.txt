@@ -1,0 +1,8 @@
+Setup to run tree_gen.py
+
+- Follow the instructions at https://www.khalidalnajjar.com/setup-use-stanford-corenlp-server-python/ to ensure you have Java 8 and StanfordCoreNLP installed
+    - Download the CoreNLP dir into this github repo (but since it's very large, add it to .gitignore)
+- pip install stanfordcorenlp
+- If you're on mac there's another step but I believe you both aren't
+- You can run tree_gen.py
+- When it finishes (it seems like StanfordNLP is very slow) you can compile the generated parsed_tree_vis.tex to see the PDF of the tree.
