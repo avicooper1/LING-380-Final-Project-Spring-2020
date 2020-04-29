@@ -6,6 +6,10 @@ import torchtext.data as tt
 from torchtext import datasets
 from torchtext.vocab import GloVe
 
+import os
+import urllib.request
+import json
+
 def load_wikitext_103(batch_size: int) -> \
         Tuple[tt.Iterator, tt.Iterator, tt.Iterator, tt.Field]:
     """
@@ -32,3 +36,35 @@ def load_wikitext_103(batch_size: int) -> \
                                      batch_size=batch_size, device=device)
 
     return iters + (text_field,)
+
+def get_blimp_data(fname: str) -> \
+        Tuple[List, List, List]:
+        
+    """
+    Downloads and prepares necessary BLiMP data
+    
+    :param fname: file name - must be the exact file name of any .jsonl file found here:
+    https://github.com/alexwarstadt/blimp/tree/master/data
+    :return: list of dicts containing all attributes of the .json file, list of strings containing the bad and good sentences
+    """
+    
+    git_dir = "https://raw.githubusercontent.com/alexwarstadt/blimp/master/data/"
+    
+    if not os.path.exists('blimp_data'):
+        os.makedirs('blimp_data')
+        
+    if not os.path.exists('blimp_data/' + fname + '.jsonl'):
+        urllib.request.urlretrieve(git_dir + fname + ".jsonl", "blimp_data/" + fname + ".jsonl")
+        
+    with open('blimp_data/' + fname + ".jsonl", "r") as json_file:
+        json_list = list(json_file)
+    
+    result = []
+    for json_str in json_list:
+        result.append(json.loads(json_str))
+        
+    sentence_bad, sentence_good = [], []
+    for i in result:
+        sentence_bad.append(i['sentence_bad']), sentence_good.append(i['sentence_good'])
+        
+    return result, sentence_bad, sentence_good
