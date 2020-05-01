@@ -10,13 +10,13 @@ def gen_tikz_qtree(parse):
 
 if __name__ == '__main__':
     sNLP = StanfordCoreNLP('stanford-corenlp-full-2020-04-20', port=9000, memory='8g', logging_level=logging.DEBUG)
-    text = 'I went to the nearby makolet and bought some yellow potatoes.'
     batches = tools.load_wikitext_103(128)
     for batch in batches:
-        parse_trees = sNLP.parse(text)
+        parse_trees = sNLP.parse(batch)
         with open('test.txt', 'a') as f:
             f.write(parse_trees)
         break
+    sNLP.close()
 
 
 
