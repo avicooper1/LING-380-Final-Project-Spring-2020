@@ -19,7 +19,7 @@ def load_wikitext_103(batch_size: int) -> \
     :return: Iterators for the three datasets, text field
     """
     # Prepare fields
-    text_field = tt.Field(lower=True, batch_first=True)
+    text_field = tt.Field(lower=True)
     
     # Load data
     train_data, valid_data, test_data = datasets.WikiText103.splits(text_field)
