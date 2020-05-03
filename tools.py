@@ -10,32 +10,41 @@ import os
 import urllib.request
 import json
 
-def load_wikitext_103(batch_size: int) -> \
-        Tuple[tt.Iterator, tt.Iterator, tt.Iterator, tt.Field]:
+def load_snli(batch_size: int, trees = False) -> \
+        Tuple[tt.Iterator, tt.Iterator, tt.Iterator, tt.Field, tt.Field]:
     """
-    Loads the WikiText103 data from torchtext
+    Loads the SNLI data from torchtext
 
     :param batch_size: The size of the mini-batches
-    :return: Iterators for the three datasets, text field
+    :param trees: Whether or not data should be created with parse trees (false by default)
+    :return: Train, validation, and test set iterators, text and label fields
     """
-    # Prepare fields
-    text_field = tt.Field(lower=True)
-    
-    # Load data
-    train_data, valid_data, test_data = datasets.WikiText103.splits(text_field)
 
+    # prepare fields
+    TEXT = datasets.nli.ParsedTextField()
+    LABEL = tt.LabelField()
+    
+    # load data dependent on whether data should include parse trees    
+    if trees:
+        TREE = datasets.nli.ShiftReduceField()
+        train, val, test = datasets.SNLI.splits(TEXT, LABEL, TREE)
+        
+    else:
+        train, val, test = datasets.SNLI.splits(TEXT, LABEL)
+    
     # build vocab
-    text_field.build_vocab(train_data, valid_data, test_data, vectors=GloVe(name='6B', dim=300))
+    TEXT.build_vocab(train)
+    LABEL.build_vocab(train)
 
     # print vocab information
-    print(f"Size of vocabulary: {len(text_field.vocab)}")
+    print(f"Size of vocabulary: {len(TEXT.vocab)}")
     
     # iterator    
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    iters = tt.BucketIterator.splits((train_data, valid_data, test_data),
+    iters = tt.BucketIterator.splits((train, val, test),
                                      batch_size=batch_size, device=device)
 
-    return iters + (text_field,)
+    return iters + (TEXT, LABEL)
 
 def get_blimp_data(fname: str) -> \
         Tuple[List, List, List]:
