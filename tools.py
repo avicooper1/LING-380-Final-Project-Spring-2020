@@ -5,6 +5,7 @@ import torch
 import torchtext.data as tt
 from torchtext import datasets
 from torchtext.vocab import GloVe
+import torch.nn as nn
 
 import os
 import urllib.request
@@ -73,7 +74,46 @@ def get_blimp_data(fname: str) -> \
         result.append(json.loads(json_str))
         
     sentence_bad, sentence_good = [], []
+    prefix_bad, prefix_good = [], []
     for i in result:
         sentence_bad.append(i['sentence_bad']), sentence_good.append(i['sentence_good'])
+        prefix_bad.append(i['one_prefix_word_bad']), prefix_good.append(i['one_prefix_word_good'])
         
-    return result, sentence_bad, sentence_good
+    return result, sentence_bad, sentence_good, prefix_bad, prefix_good
+
+def blimp_to_tensor(sentence_list: List, prefix_list: List, model: nn.Module) -> torch.Tensor:
+    """
+    Converts list of sentences and prefixes to a tensor containing all the words in the sentence leading up to the prefix
+    The tensor will be of shape (max_sentence_length, 1000), meaning column i contains the context for the ith prefix
+    Also returns a tensor of the tokenized prefixes of shape (1000)
+
+    :param sentence_list: List of sentences of BLiMP data (as returned by get_blimp_data)
+    :param prefix_list: List of prefixes of BLiMP data
+    :param model: Model being used (parameter is here to use the model's text field for tokenization)
+    :return: Context and prefix tensors
+    """
+    
+    prefix_context = []
+    for sentence, prefix in zip(sentence_list, prefix_list):
+        prefix_context.append(sentence.split()[:sentence.replace(".", "").split().index(prefix)])
+        
+    index_list = []
+    max_len = 0    
+    for sentence in prefix_context:
+        if(len(sentence) > max_len):
+            max_len = len(sentence)
+        
+        curr_sentence = []  
+        for word in sentence:
+            curr_sentence.append(model.text_field.vocab.stoi[word])
+        index_list.append(curr_sentence)
+        
+    pad_index = model.text_field.vocab.stoi['<pad>']
+    for sentence_index in index_list:
+        while(len(sentence_index) < max_len):
+            sentence_index.insert(0, pad_index)
+
+    context_index_tensor = torch.FloatTensor(index_list).T
+    prefix_index_tensor = torch.FloatTensor([model.text_field.vocab.stoi[word] for word in prefix_list])
+    
+    return context_index_tensor, prefix_index_tensor
