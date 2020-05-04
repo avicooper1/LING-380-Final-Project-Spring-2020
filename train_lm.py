@@ -44,8 +44,8 @@ def evaluate(model: nn.Module, iterator: BucketIterator, criterion: nn.Module):
     pad_index = model.text_field.vocab.stoi['<pad>']
     with torch.no_grad():
         for batch in iterator:
+            output, _ = model(batch)
             text = batch.premise[0]
-            output, _ = model(text)
             text = text.permute(1, 0)
             output = output.permute(1, 0, 2)
             for i in range(1, text.shape[1]):
