@@ -61,7 +61,7 @@ class SNLIClassifier(nn.Module):
         self.projection = Linear(config.d_embed, config.d_proj)
         self.embed_bn = BatchNorm(config.d_proj)
         self.embed_dropout = nn.Dropout(p=config.embed_dropout)
-        self.encoder = SPINN(config) if config.spinn else Encoder(config)
+        self.encoder = SPINN(config.d_hidden)
         feat_in_size = config.d_hidden * (
             2 if self.config.birnn and not self.config.spinn else 1)
         self.feature = Feature(feat_in_size, config.mlp_dropout)
@@ -79,8 +79,9 @@ class SNLIClassifier(nn.Module):
     def forward(self, batch):
         # import pdb
         # pdb.set_trace()
-        prem_embed = self.embed(batch.premise)
-        hypo_embed = self.embed(batch.hypothesis)
+
+        prem_embed = self.embed(batch.premise[0])
+        hypo_embed = self.embed(batch.hypothesis[0])
         if self.config.fix_emb:
             prem_embed = Variable(prem_embed.data)
             hypo_embed = Variable(hypo_embed.data)

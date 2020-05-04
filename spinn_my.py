@@ -111,12 +111,14 @@ class Tracker(nn.Module):
 
 class SPINN(nn.Module):
 
-    def __init__(self, hidden_dim, d_tracker=64, predict=False):
+    def __init__(self, config):
         super(SPINN, self).__init__()
-        self.reduce = Reduce(hidden_dim, d_tracker)
-        if d_tracker is not None:
-            self.tracker = Tracker(hidden_dim, d_tracker,
-                                   predict=predict)
+        self.config = config
+        assert config.d_hidden == config.d_proj / 2
+        self.reduce = Reduce(config.d_hidden, config.d_tracker)
+        if config.d_tracker is not None:
+            self.tracker = Tracker(config.d_hidden, config.d_tracker,
+                                   predict=config.predict)
 
     def forward(self, buffers, transitions):
         buffers = [list(torch.split(b.squeeze(1), 1, 0))
@@ -163,4 +165,4 @@ class SPINN(nn.Module):
                     if transition == 2:
                         stack.append(next(reduced))
         # if trans_loss is not 0:
-        return bundle([stack.pop() for stack in stacks])[0], tracker_states
+        return bundle([stack.pop() for stack in stacks])[0]

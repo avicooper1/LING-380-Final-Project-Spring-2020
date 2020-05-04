@@ -20,8 +20,8 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
         batch_loss = torch.tensor(0., requires_grad=True)
         optimizer.zero_grad()    
         
+        output, _ = model(batch)
         text = batch.premise[0]
-        output, _ = model(text)
         text = text.permute(1, 0) # permute text to be of size (n_batches, seq_len)
         output = output.permute(1, 0, 2) # permute output to be of size (n_batches, seq_len, n_words)
         for i in range(1, text.shape[1]):

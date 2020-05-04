@@ -12,12 +12,6 @@ from torchtext import datasets
 from model import SNLIClassifier
 from util import get_args
 
-model = nn.LSTM
-
-import warnings
-
-warnings.simplefilter("error")
-
 args = get_args()
 args.gpu = -1
 args.spinn = True
@@ -25,9 +19,9 @@ args.spinn = True
 if args.gpu != -1:
     torch.cuda.set_device(args.gpu)
 
-inputs = datase)sets.nli.ParsedTextField(lower=args.lower)
+inputs = datasets.nli.ParsedTextField(lower=args.lower)
 transitions = datasets.nli.ShiftReduceField()
-answers = data.Field(sequential=Fal
+answers = data.Field(sequential=False)
 
 train, dev, test = datasets.SNLI.splits(inputs, answers, transitions)
 
