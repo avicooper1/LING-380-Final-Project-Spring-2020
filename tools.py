@@ -117,3 +117,36 @@ def blimp_to_tensor(sentence_list: List, prefix_list: List, model: nn.Module) ->
     prefix_index_tensor = torch.FloatTensor([model.text_field.vocab.stoi[word] for word in prefix_list])
     
     return context_index_tensor.long(), prefix_index_tensor.long()
+
+def blimp_accuracy(model: nn.Module, context: torch.Tensor, good_prefix: torch.Tensor, bad_prefix: torch.Tensor) -> \
+        Tuple[int, int, int, int]:
+        
+    """
+    Evalutes model accuracy on a given BLiMP dataset
+    
+    :param model: The model used to predict the next word
+    :param context: Tensor of sentence context to the desired prefix, as returned from blimp_to_tensor
+    :param good_prefix, bad_prefix: Tensors of indices of the good (correct) and bad (incorrect) prefixes, also from blimp_to_tensor
+    :return correct: Number of times where the model probability for good prefix > probability for bad prefix
+    :return gp_count: Number of times where the most probable word was the good prefix
+    :return bp_count: Number of times where the most probable word was the bad prefix
+    :return total: Total guesses
+    """
+    output = model(context)[0].permute(1, 0, 2) # permute to be (n_batches, max_sentence_len, n_words)
+
+    correct = 0
+    gp_count = 0
+    bp_count = 0
+    total = 0
+    for i, gp_index, bp_index in zip(range(output.shape[0]), good_prefix, bad_prefix):
+        if(output[i, -1, gp_index] > output[i, -1, bp_index]):
+            correct += 1
+        total += 1
+
+        _, max_index = torch.max(output[i, -1, :], dim = 0)
+        if(max_index == gp_index):
+            gp_count += 1
+        elif(max_index == bp_index):
+            bp_count += 1
+
+    return correct, gp_count, bp_count, total
