@@ -44,7 +44,11 @@ class LanguageModel(nn.Module):
         self.out = nn.Linear(hidden_dim, len(text_field.vocab))
         
     def forward(self, input):
-        embedded = self.embedding(input.premise[0])
+        if hasattr(input, "premise"):
+            embedded = self.embedding(input.premise[0])
+        else:
+            embedded = self.embedding(input)
+            
         if self.rnn_type != "SPINN":
             output, hidden = self.rnn(embedded)
         else:
