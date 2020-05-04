@@ -116,4 +116,4 @@ def blimp_to_tensor(sentence_list: List, prefix_list: List, model: nn.Module) ->
     context_index_tensor = torch.FloatTensor(index_list).T
     prefix_index_tensor = torch.FloatTensor([model.text_field.vocab.stoi[word] for word in prefix_list])
     
-    return context_index_tensor, prefix_index_tensor
+    return context_index_tensor.long(), prefix_index_tensor.long()
