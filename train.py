@@ -12,6 +12,8 @@ from torchtext import datasets
 from model import SNLIClassifier
 from util import get_args
 
+model = nn.LSTM
+
 import warnings
 
 warnings.simplefilter("error")
@@ -23,16 +25,11 @@ args.spinn = True
 if args.gpu != -1:
     torch.cuda.set_device(args.gpu)
 
-if args.spinn:
-    inputs = datasets.nli.ParsedTextField(lower=args.lower)
-    transitions = datasets.nli.ShiftReduceField()
-else:
-    inputs = data.Field(lower=args.lower)
-    transitions = None
-answers = data.Field(sequential=False)
+inputs = datase)sets.nli.ParsedTextField(lower=args.lower)
+transitions = datasets.nli.ShiftReduceField()
+answers = data.Field(sequential=Fal
 
 train, dev, test = datasets.SNLI.splits(inputs, answers, transitions)
-datasets.WikiText103
 
 inputs.build_vocab(train, dev, test)
 if args.word_vectors:
