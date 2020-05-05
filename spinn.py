@@ -122,6 +122,7 @@ class SPINN(nn.Module):
                                    predict=predict)
 
     def forward(self, buffers, transitions):
+        sentence_len, batch_size = buffers.shape[0], buffers.shape[1]
         buffers = [list(torch.split(b.squeeze(1), 1, 0))
                    for b in torch.split(buffers, 1, 1)]
         stacks = [[buf[0], buf[0]] for buf in buffers]
