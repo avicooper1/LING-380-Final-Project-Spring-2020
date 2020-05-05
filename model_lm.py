@@ -29,7 +29,7 @@ class LanguageModel(nn.Module):
         self.text_field = text_field
         self.rnn_type = rnn_type
 
-        self.embedding = nn.Embedding.from_pretrained(GloVe('6B'), freeze=True)
+        self.embedding = nn.Embedding.from_pretrained(GloVe('6B').vectors, freeze=True)
             #nn.Embedding(len(text_field.vocab), embedding_dim)
         
         if(self.rnn_type == "SRN"):
