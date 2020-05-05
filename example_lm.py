@@ -19,7 +19,7 @@ args = parser.parse_args()
 glove_obj = GloVe(args.glove_set, dim=100)
 
 # load data
-train_iter, val_iter, test_iter, text_field, label_field = load_snli(batch_size=256, trees=True, glove_obj=glove_obj)
+train_iter, val_iter, test_iter, text_field, label_field = load_snli(batch_size=128, trees=True, glove_obj=glove_obj)
 
 # define model params, loss function, and optimizer
 embedding_dim = 100
