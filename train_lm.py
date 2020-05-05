@@ -15,7 +15,7 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
     model.train()
     epoch_loss = 0.
     n_batches = len(iterator)
-    for n, batch in tqdm(enumerate(iterator)):
+    for n, batch in enumerate(tqdm(iterator)):
         if short_train and n % 20 != 0:
             continue       
         batch_loss = torch.tensor(0., requires_grad=True)
