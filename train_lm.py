@@ -10,7 +10,7 @@ from early_stopping import EarlyStopping
 from tqdm import tqdm
 
 def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Optimizer, criterion: nn.Module,
-                clip: float, short_train: bool = False,):
+                clip: float, device, short_train: bool = False,):
     
     model.train()
     epoch_loss = 0.
@@ -18,7 +18,7 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
     for n, batch in enumerate(tqdm(iterator)):
         if short_train and n % 20 != 0:
             continue       
-        batch_loss = torch.tensor(0., requires_grad=True)
+        batch_loss = torch.tensor(0., requires_grad=True, device=device)
         optimizer.zero_grad()    
         
         output, _ = model(batch)
@@ -29,7 +29,6 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
             pred_words = output[:, i - 1]
             target = text[:, i]
             batch_loss = batch_loss + criterion(pred_words, target)
-        print(batch_loss.device)
         batch_loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
         optimizer.step()
@@ -66,13 +65,13 @@ def epoch_time(start_time: int, end_time: int):
     return elapsed_mins, elapsed_secs
 
 
-def train(model, train_iterator, valid_iterator, test_iterator, optimizer, criterion, model_checkpoint,
+def train(model, train_iterator, valid_iterator, test_iterator, optimizer, criterion, model_checkpoint, device,
           clip=1, short_train=True, n_epochs=50, patience=3):
     
     early_stopping = EarlyStopping(patience=patience, verbose=False, filename=model_checkpoint)
     for epoch in range(n_epochs):
         start_time = time.time()
-        train_loss = train_epoch(model, train_iterator, optimizer, criterion, clip, short_train)
+        train_loss = train_epoch(model, train_iterator, optimizer, criterion, clip, device, short_train)
         valid_loss = evaluate(model, valid_iterator, criterion)
         end_time = time.time()
         epoch_mins, epoch_secs = epoch_time(start_time, end_time)
