@@ -2,6 +2,7 @@ from typing import List, Tuple
 
 import numpy as np
 import torch
+import torchtext
 import torchtext.data as tt
 from torchtext import datasets
 from torchtext.vocab import GloVe
@@ -34,8 +35,8 @@ def load_snli(batch_size: int, trees = False) -> \
         train, val, test = datasets.SNLI.splits(TEXT, LABEL)
     
     # build vocab
-    TEXT.build_vocab(train)
-    LABEL.build_vocab(train)
+    TEXT.build_vocab(train, vectors=torchtext.vocab.Vectors(os.path.join(os.getcwd(), '.vector_cache/input_vectors.pt')))
+    LABEL.build_vocab(train, vectors=torchtext.vocab.Vectors(os.path.join(os.getcwd(), '.vector_cache/input_vectors.pt')))
 
     # print vocab information
     print(f"Size of vocabulary: {len(TEXT.vocab)}")
