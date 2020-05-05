@@ -32,12 +32,13 @@ hidden_dim = 50
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
 model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj) # can use GRU or LSTM instead of SRN
-optimizer = optim.Adam(model.parameters())
-
 # if GPU is available, change to make model run on GPU and make all tensors run there by default
 if torch.cuda.is_available() and not args.device == 'cpu':
     model.cuda(args.device)
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
+
+optimizer = optim.Adam(model.parameters())
+
 
 # train model
 n_epochs = args.epochs

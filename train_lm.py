@@ -29,7 +29,7 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
             pred_words = output[:, i - 1]
             target = text[:, i]
             batch_loss = batch_loss + criterion(pred_words, target)
-            
+        print(batch_loss.device)
         batch_loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
         optimizer.step()
