@@ -122,7 +122,7 @@ class SPINN(nn.Module):
                                    predict=predict)
 
     def forward(self, buffers, transitions):
-        sentence_len, batch_size = buffers.shape[0], buffers.shape[1]
+        sentence_len, batch_size, embedding_size = buffers.shape[0], buffers.shape[1], int(buffers.shape[2] / 2)
         buffers = [list(torch.split(b.squeeze(1), 1, 0))
                    for b in torch.split(buffers, 1, 1)]
         stacks = [[buf[0], buf[0]] for buf in buffers]
@@ -148,5 +148,5 @@ class SPINN(nn.Module):
                     if transition == REDUCE:
                         stack.append(next(reduced))
         
-        output = bundle([stack.pop() for stack in stacks])[0].unsqueeze(0).expand(sentence_len, batch_size, 1)
+        output = bundle([stack.pop() for stack in stacks])[0].unsqueeze(0).expand(sentence_len, batch_size, embedding_size)
         return output, tracker_states
