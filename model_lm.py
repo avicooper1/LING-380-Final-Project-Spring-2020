@@ -4,6 +4,7 @@ import torch.nn.functional as F
 import torchtext.data as tt
 from spinn import SPINN
 import os
+import dload
 
 
 from torch.autograd import Variable
@@ -28,8 +29,13 @@ class LanguageModel(nn.Module):
         self.hidden_dim = hidden_dim
         self.text_field = text_field
         self.rnn_type = rnn_type
-        
-        self.embedding = nn.Embedding.from_pretrained(torch.load(os.path.join(os.getcwd(), '.vector_cache/input_vectors.pt')))
+
+        vector_cache = os.path.join(os.getcwd(), '.vector_cache/input_vectors.pt')
+        if not os.path.isfile(vector_cache):
+            text_field.vocab.load_vectors('glove.6B.300d', cache=os.path.join(os.getcwd(), '.data_cache'))
+            os.makedirs(os.path.dirname(vector_cache), exist_ok=True)
+            torch.save(text_field.vocab.vectors, vector_cache)
+        self.embedding = nn.Embedding.from_pretrained(torch.load(vector_cache))
             #nn.Embedding(len(text_field.vocab), embedding_dim)
         
         if(self.rnn_type == "SRN"):
