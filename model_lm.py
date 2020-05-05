@@ -20,7 +20,7 @@ class Linear(Bottle, nn.Linear):
 
 
 class LanguageModel(nn.Module):
-    def __init__(self, text_field: tt.Field, embedding_dim: int, hidden_dim: int, rnn_type: str, glove_obj=None):
+    def __init__(self, text_field: tt.Field, embedding_dim: int, hidden_dim: int, rnn_type: str, glove_obj=None, stored_model=None):
         super(LanguageModel, self).__init__()
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
@@ -41,6 +41,8 @@ class LanguageModel(nn.Module):
             raise ValueError("Please choose either SRN, GRU, LSTM or SPINN as RNN type")
         
         self.out = nn.Linear(hidden_dim, len(text_field.vocab))
+
+        if stored_model is not None: self.load_state_dict(stored_model)
         
     def forward(self, input):
         if hasattr(input, "premise"):
