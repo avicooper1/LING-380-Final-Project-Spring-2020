@@ -6,3 +6,10 @@ Setup to run tree_gen.py
 - If you're on mac there's another step but I believe you both aren't
 - You can run tree_gen.py
 - When it finishes (it seems like StanfordNLP is very slow) you can compile the generated parsed_tree_vis.tex to see the PDF of the tree.
+
+
+conda create -n fpenv python=3.7
+conda init bash
+source .bash_profile
+conda activate fpenv
+conda install pytorch torchtext cudatoolkit=10.2 -c pytorch

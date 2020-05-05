@@ -4,14 +4,13 @@ import numpy as np
 import torch
 import torchtext.data as tt
 from torchtext import datasets
-from torchtext.vocab import GloVe
 import torch.nn as nn
 
 import os
 import urllib.request
 import json
 
-def load_snli(batch_size: int, trees = False) -> \
+def load_snli(batch_size: int, trees = False, glove_obj=None) -> \
         Tuple[tt.Iterator, tt.Iterator, tt.Iterator, tt.Field, tt.Field]:
     """
     Loads the SNLI data from torchtext
@@ -34,8 +33,8 @@ def load_snli(batch_size: int, trees = False) -> \
         train, val, test = datasets.SNLI.splits(TEXT, LABEL)
     
     # build vocab
-    TEXT.build_vocab(train, vectors=GloVe('6B'))
-    LABEL.build_vocab(train, vectors=GloVe('6B'))
+    TEXT.build_vocab(train, vectors=glove_obj)
+    LABEL.build_vocab(train, vectors=glove_obj)
 
     # print vocab information
     print(f"Size of vocabulary: {len(TEXT.vocab)}")

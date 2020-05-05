@@ -22,15 +22,14 @@ class Linear(Bottle, nn.Linear):
 
 
 class LanguageModel(nn.Module):
-    def __init__(self, text_field: tt.Field, embedding_dim: int, hidden_dim: int, rnn_type: str):
+    def __init__(self, text_field: tt.Field, embedding_dim: int, hidden_dim: int, rnn_type: str, glove_obj=None):
         super(LanguageModel, self).__init__()
         self.embedding_dim = embedding_dim
         self.hidden_dim = hidden_dim
         self.text_field = text_field
         self.rnn_type = rnn_type
 
-        self.embedding = nn.Embedding.from_pretrained(GloVe('6B').vectors, freeze=True)
-            #nn.Embedding(len(text_field.vocab), embedding_dim)
+        self.embedding = nn.Embedding.from_pretrained(glove_obj.vectors, freeze=True) if glove_obj is not None else nn.Embedding(len(text_field.vocab), embedding_dim)
         
         if(self.rnn_type == "SRN"):
             self.rnn = nn.RNN(embedding_dim, hidden_dim)
