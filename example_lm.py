@@ -27,7 +27,7 @@ hidden_dim = 100
 
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj) # can use GRU or LSTM instead of SRN
+model = nn.DataParallel(LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj)) # can use GRU or LSTM instead of SRN
 optimizer = optim.Adam(model.parameters())
 
 # if GPU is available, change to make model run on GPU and make all tensors run there by default
