@@ -33,7 +33,9 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
         batch_loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), clip)
         optimizer.step()
-        epoch_loss += batch_loss.item()      
+        epoch_loss += batch_loss.item()
+        if n % 100 == 0:
+            print("Memory allocated: {}".format(torch.cuda.memory_allocated(device=None)))
     return epoch_loss / len(iterator)
 
 
