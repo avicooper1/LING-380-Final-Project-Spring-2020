@@ -35,7 +35,7 @@ class LanguageModel(nn.Module):
             text_field.vocab.load_vectors('glove.6B.300d', cache=os.path.join(os.getcwd(), '.data_cache'))
             os.makedirs(os.path.dirname(vector_cache), exist_ok=True)
             torch.save(text_field.vocab.vectors, vector_cache)
-        self.embedding = nn.Embedding.from_pretrained(torch.load(vector_cache))
+        self.embedding = nn.Embedding.from_pretrained(torch.load(vector_cache), freeze=True)
             #nn.Embedding(len(text_field.vocab), embedding_dim)
         
         if(self.rnn_type == "SRN"):
