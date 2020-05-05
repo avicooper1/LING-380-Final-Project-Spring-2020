@@ -3,8 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchtext.data as tt
 from spinn import SPINN
-from torchtext.vocab import GloVe
-
 
 from torch.autograd import Variable
 class Bottle(nn.Module):

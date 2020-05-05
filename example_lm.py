@@ -16,14 +16,14 @@ parser.add_argument('--glove_set', type=str, default='6B')
 args = parser.parse_args()
 
 #GloVe vector set to use:
-glove_obj = GloVe(args.glove_set)
+glove_obj = GloVe(args.glove_set, dim=100)
 
 # load data
 train_iter, val_iter, test_iter, text_field, label_field = load_snli(batch_size=32, trees=True, glove_obj=glove_obj)
 
 # define model params, loss function, and optimizer
-embedding_dim = 300
-hidden_dim = 300
+embedding_dim = 100
+hidden_dim = 100
 
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
