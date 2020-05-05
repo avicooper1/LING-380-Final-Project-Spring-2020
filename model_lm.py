@@ -42,7 +42,7 @@ class LanguageModel(nn.Module):
         
         self.out = nn.Linear(hidden_dim, len(text_field.vocab))
 
-        if stored_model is not None: self.load_state_dict(stored_model)
+        if stored_model is not None: self.load_state_dict(torch.load(stored_model))
         
     def forward(self, input):
         if hasattr(input, "premise"):
