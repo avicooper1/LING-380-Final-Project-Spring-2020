@@ -6,6 +6,7 @@ import train_lm
 from tools import load_snli
 from torchtext.vocab import GloVe
 from argparse import ArgumentParser
+import os
 
 parser = ArgumentParser(description='LING 380 Final Project')
 parser.add_argument('--epochs', type=int, default=1)
@@ -36,4 +37,4 @@ if torch.cuda.is_available():
 
 # train model
 n_epochs = args.epochs
-train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, short_train=True, n_epochs=n_epochs, patience=3)
+train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, args.model + '_checkpoint.pt', short_train=False, n_epochs=n_epochs, patience=3)

@@ -64,10 +64,10 @@ def epoch_time(start_time: int, end_time: int):
     return elapsed_mins, elapsed_secs
 
 
-def train(model, train_iterator, valid_iterator, test_iterator, optimizer, criterion,
+def train(model, train_iterator, valid_iterator, test_iterator, optimizer, criterion, model_checkpoint,
           clip=1, short_train=True, n_epochs=50, patience=3):
     
-    early_stopping = EarlyStopping(patience=patience, verbose=False, filename='checkpoint.pt')
+    early_stopping = EarlyStopping(patience=patience, verbose=False, filename=model_checkpoint)
     for epoch in range(n_epochs):
         start_time = time.time()
         train_loss = train_epoch(model, train_iterator, optimizer, criterion, clip, short_train)
@@ -82,7 +82,7 @@ def train(model, train_iterator, valid_iterator, test_iterator, optimizer, crite
         early_stopping(valid_loss, model)
         if early_stopping.early_stop:
             print("Early stopping, reloading checkpoint model")
-            model.load_state_dict(torch.load('checkpoint.pt'))
+            model.load_state_dict(torch.load(model_checkpoint))
             break
 
     test_loss = evaluate(model, test_iterator, criterion)
