@@ -9,8 +9,8 @@ from tools import load_snli
 train_iter, val_iter, test_iter, text_field, label_field = load_snli(batch_size=32, trees=True)
 
 # define model params, loss function, and optimizer
-embedding_dim = 16
-hidden_dim = 16
+embedding_dim = 300
+hidden_dim = 300
 
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)

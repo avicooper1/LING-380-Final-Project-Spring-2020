@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchtext.data as tt
 from spinn import SPINN
+import os
 
 
 from torch.autograd import Variable
@@ -28,7 +29,8 @@ class LanguageModel(nn.Module):
         self.text_field = text_field
         self.rnn_type = rnn_type
         
-        self.embedding = nn.Embedding(len(text_field.vocab), embedding_dim)
+        self.embedding = nn.Embedding.from_pretrained(torch.load(os.path.join(os.getcwd(), '.vector_cache/input_vectors.pt')))
+            #nn.Embedding(len(text_field.vocab), embedding_dim)
         
         if(self.rnn_type == "SRN"):
             self.rnn = nn.RNN(embedding_dim, hidden_dim)
