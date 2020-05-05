@@ -7,4 +7,5 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mail-user=avi.cooper@yale.edu
 
+cd LING-380-Final-Project-Spring-2020
 ./run_experiment.sh
