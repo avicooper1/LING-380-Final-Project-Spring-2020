@@ -7,6 +7,7 @@ import math
 import time
 import model_lm
 from early_stopping import EarlyStopping
+from tqdm import tqdm
 
 def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Optimizer, criterion: nn.Module,
                 clip: float, short_train: bool = False,):
@@ -14,7 +15,7 @@ def train_epoch(model: nn.Module, iterator: BucketIterator, optimizer: optim.Opt
     model.train()
     epoch_loss = 0.
     n_batches = len(iterator)
-    for n, batch in enumerate(iterator):
+    for n, batch in tqdm(enumerate(iterator)):
         if short_train and n % 20 != 0:
             continue       
         batch_loss = torch.tensor(0., requires_grad=True)
