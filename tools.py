@@ -10,7 +10,7 @@ import os
 import urllib.request
 import json
 
-def load_snli(batch_size: int, trees = False, glove_obj=None) -> \
+def load_snli(batch_size: int, device, trees = False, glove_obj=None) -> \
         Tuple[tt.Iterator, tt.Iterator, tt.Iterator, tt.Field, tt.Field]:
     """
     Loads the SNLI data from torchtext
@@ -40,7 +40,7 @@ def load_snli(batch_size: int, trees = False, glove_obj=None) -> \
     print(f"Size of vocabulary: {len(TEXT.vocab)}")
     
     # iterator    
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device(device)
     iters = tt.BucketIterator.splits((train, val, test),
                                      batch_size=batch_size, device=device)
 
