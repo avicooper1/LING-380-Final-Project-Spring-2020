@@ -146,5 +146,6 @@ class SPINN(nn.Module):
                 for transition, stack in zip(trans_batch, stacks):
                     if transition == REDUCE:
                         stack.append(next(reduced))
-        # return [stack.pop() for stack in stacks], tracker_states This is the code that was found on the tutorial
-        return bundle([stack.pop() for stack in stacks])[0], tracker_states # And this is the older code from the github but seems more logical
+        
+        output = bundle([stack.pop() for stack in stacks])[0].unsqueeze(0).expand(sentence_len, batch_size, 1)
+        return output, tracker_states
