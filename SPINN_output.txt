@@ -1,0 +1,107 @@
+Size of vocabulary: 42392
+Epoch: 01 | Time: 22m 2s
+	Train Loss: 59.097 | Train PPL: 4.630E+25
+	 Val. Loss: 144.577 |  Val. PPL: 6.153E+62
+Saving model
+Size of vocabulary: 42392
+Loading model from SPINN_checkpoint.pt
+Epoch: 01 | Time: 22m 18s
+	Train Loss: 58.884 | Train PPL: 3.739E+25
+	 Val. Loss: 144.574 |  Val. PPL: 6.134E+62
+Saving model
+Size of vocabulary: 42392
+Loading model from SPINN_checkpoint.pt
+Epoch: 02 | Time: 22m 10s
+	Train Loss: 59.079 | Train PPL: 4.548E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.073E+62
+Saving model
+Epoch: 01 | Time: 23m 17s
+	Train Loss: 58.900 | Train PPL: 3.803E+25
+	 Val. Loss: 144.575 |  Val. PPL: 6.137E+62
+Saving model
+Epoch: 03 | Time: 21m 41s
+	Train Loss: 58.748 | Train PPL: 3.264E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.073E+62
+EarlyStopping counter: 1 out of 3
+Epoch: 02 | Time: 23m 10s
+	Train Loss: 58.454 | Train PPL: 2.434E+25
+	 Val. Loss: 144.566 |  Val. PPL: 6.085E+62
+Saving model
+Epoch: 04 | Time: 21m 38s
+	Train Loss: 58.601 | Train PPL: 2.820E+25
+	 Val. Loss: 144.566 |  Val. PPL: 6.086E+62
+EarlyStopping counter: 2 out of 3
+Epoch: 03 | Time: 23m 7s
+	Train Loss: 58.656 | Train PPL: 2.979E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.074E+62
+Saving model
+Size of vocabulary: 42392
+Loading model from SPINN_checkpoint.pt
+Epoch: 05 | Time: 21m 49s
+	Train Loss: 58.650 | Train PPL: 2.960E+25
+	 Val. Loss: 144.563 |  Val. PPL: 6.067E+62
+Saving model
+Epoch: 04 | Time: 23m 13s
+	Train Loss: 58.715 | Train PPL: 3.158E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.071E+62
+Saving model
+Epoch: 01 | Time: 23m 16s
+	Train Loss: 58.895 | Train PPL: 3.784E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.070E+62
+Saving model
+Epoch: 06 | Time: 21m 40s
+	Train Loss: 58.426 | Train PPL: 2.367E+25
+	 Val. Loss: 144.564 |  Val. PPL: 6.069E+62
+EarlyStopping counter: 1 out of 3
+Epoch: 05 | Time: 23m 6s
+	Train Loss: 58.501 | Train PPL: 2.550E+25
+	 Val. Loss: 144.565 |  Val. PPL: 6.079E+62
+EarlyStopping counter: 1 out of 3
+Epoch: 02 | Time: 22m 59s
+	Train Loss: 58.484 | Train PPL: 2.508E+25
+	 Val. Loss: 144.557 |  Val. PPL: 6.027E+62
+Saving model
+Epoch: 07 | Time: 21m 23s
+	Train Loss: 57.964 | Train PPL: 1.491E+25
+	 Val. Loss: 144.560 |  Val. PPL: 6.045E+62
+Saving model
+Size of vocabulary: 42392
+Loading model from SPINN_checkpoint.pt
+Epoch: 06 | Time: 23m 4s
+	Train Loss: 58.622 | Train PPL: 2.879E+25
+	 Val. Loss: 144.556 |  Val. PPL: 6.026E+62
+Saving model
+Epoch: 03 | Time: 23m 0s
+	Train Loss: 58.785 | Train PPL: 3.388E+25
+	 Val. Loss: 144.549 |  Val. PPL: 5.982E+62
+Saving model
+Epoch: 08 | Time: 21m 35s
+	Train Loss: 58.359 | Train PPL: 2.213E+25
+	 Val. Loss: 144.558 |  Val. PPL: 6.036E+62
+Saving model
+Epoch: 09 | Time: 21m 40s
+	Train Loss: 58.658 | Train PPL: 2.984E+25
+	 Val. Loss: 144.549 |  Val. PPL: 5.984E+62
+Saving model
+Epoch: 04 | Time: 23m 0s
+	Train Loss: 58.770 | Train PPL: 3.337E+25
+	 Val. Loss: 144.541 |  Val. PPL: 5.935E+62
+Saving model
+Epoch: 01 | Time: 36m 17s
+	Train Loss: 58.547 | Train PPL: 2.671E+25
+	 Val. Loss: 144.562 |  Val. PPL: 6.059E+62
+Saving model
+Epoch: 10 | Time: 21m 30s
+	Train Loss: 58.267 | Train PPL: 2.018E+25
+	 Val. Loss: 144.560 |  Val. PPL: 6.051E+62
+EarlyStopping counter: 1 out of 3
+Epoch: 11 | Time: 21m 48s
+	Train Loss: 58.866 | Train PPL: 3.673E+25
+	 Val. Loss: 144.558 |  Val. PPL: 6.038E+62
+EarlyStopping counter: 2 out of 3
+Epoch: 12 | Time: 21m 40s
+	Train Loss: 58.582 | Train PPL: 2.765E+25
+	 Val. Loss: 144.558 |  Val. PPL: 6.036E+62
+EarlyStopping counter: 3 out of 3
+Early stopping, reloading checkpoint model
+| Test Loss: 143.806 | Test PPL: 2.845E+62 |
