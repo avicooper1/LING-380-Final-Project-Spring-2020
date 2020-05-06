@@ -54,7 +54,7 @@ class LanguageModel(nn.Module):
             output, hidden = self.rnn(embedded)
         else:
             prem_embed = Linear(self.embedding_dim, self.embedding_dim * 2)(embedded)
-            output, hidden = self.rnn(prem_embed, input.premise_transitions)
+            output, hidden = self.rnn(prem_embed, input.premise_transitions if hasattr(input, 'premise_transitions') else None)
 
         output = self.out(output)
         
