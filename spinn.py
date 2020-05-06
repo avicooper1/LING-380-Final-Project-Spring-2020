@@ -128,13 +128,31 @@ class SPINN(nn.Module):
         stacks = [[buf[0], buf[0]] for buf in buffers]
         if hasattr(self, 'tracker'):
             self.tracker.reset_state()
-        for trans_batch in transitions:
+        else:
+            assert transitions is not None
+
+        if transitions is not None:
+            num_transitions = transitions.size(0)
+            trans_loss, trans_acc = 0, 0
+        else:
+            num_transitions = len(buffers[0]) * 2 - 3
+
+        for i in range(num_transitions):
+            if transitions is not None:
+                trans = transitions[i]
             if hasattr(self, 'tracker'):
-                tracker_states, _ = self.tracker(buffers, stacks)
+                tracker_states, trans_hyp = self.tracker(buffers, stacks)
+                if trans_hyp is not None:
+                    trans = trans_hyp.max(1)[1]
+                    # if transitions is not None:
+                    #     trans_loss += F.cross_entropy(trans_hyp, trans)
+                    #     trans_acc += (trans_preds.data == trans.data).mean()
+                    # else:
+                    #     trans = trans_preds
             else:
                 tracker_states = itertools.repeat(None)
             lefts, rights, trackings = [], [], []
-            batch = zip(trans_batch, buffers, stacks, tracker_states)
+            batch = zip(trans.data, buffers, stacks, tracker_states)
             for transition, buf, stack, tracking in batch:
                 if transition == SHIFT:
                     stack.append(buf.pop())
