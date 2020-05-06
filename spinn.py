@@ -162,7 +162,7 @@ class SPINN(nn.Module):
                     trackings.append(tracking)
             if rights:
                 reduced = iter(self.reduce(lefts, rights, trackings))
-                for transition, stack in zip(trans_batch, stacks):
+                for transition, stack in zip(trans.data, stacks):
                     if transition == REDUCE:
                         stack.append(next(reduced))
         
