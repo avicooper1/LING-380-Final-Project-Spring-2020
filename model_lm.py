@@ -58,4 +58,4 @@ class LanguageModel(nn.Module):
 
         output = self.out(output)
         
-        return F.softmax(output, dim = 1), hidden
+        return output, hidden
