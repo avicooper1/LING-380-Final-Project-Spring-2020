@@ -1,0 +1,17 @@
+Size of vocabulary: 42392
+Epoch: 01 | Time: 4m 6s
+	Train Loss: 60.832 | Train PPL: 2.625E+26
+	 Val. Loss: 154.657 |  Val. PPL: 1.468E+67
+Saving model
+Epoch: 02 | Time: 4m 5s
+	Train Loss: 60.596 | Train PPL: 2.073E+26
+	 Val. Loss: 154.625 |  Val. PPL: 1.421E+67
+Saving model
+Epoch: 03 | Time: 4m 9s
+	Train Loss: 61.102 | Train PPL: 3.437E+26
+	 Val. Loss: 154.603 |  Val. PPL: 1.391E+67
+Saving model
+Epoch: 04 | Time: 4m 5s
+	Train Loss: 60.658 | Train PPL: 2.206E+26
+	 Val. Loss: 154.577 |  Val. PPL: 1.355E+67
+Saving model
