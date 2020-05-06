@@ -1,0 +1,63 @@
+Size of vocabulary: 42392
+Epoch: 01 | Time: 5m 30s
+	Train Loss: 31.374 | Train PPL: 4.221E+13
+	 Val. Loss: 71.452 |  Val. PPL: 1.074E+31
+Saving model
+Epoch: 02 | Time: 5m 27s
+	Train Loss: 27.419 | Train PPL: 8.093E+11
+	 Val. Loss: 67.971 |  Val. PPL: 3.306E+29
+Saving model
+Epoch: 03 | Time: 5m 33s
+	Train Loss: 26.482 | Train PPL: 3.169E+11
+	 Val. Loss: 66.657 |  Val. PPL: 8.889E+28
+Saving model
+Epoch: 04 | Time: 5m 30s
+	Train Loss: 25.518 | Train PPL: 1.208E+11
+	 Val. Loss: 65.895 |  Val. PPL: 4.149E+28
+Saving model
+Epoch: 05 | Time: 5m 32s
+	Train Loss: 25.227 | Train PPL: 9.033E+10
+	 Val. Loss: 65.411 |  Val. PPL: 2.558E+28
+Saving model
+Epoch: 06 | Time: 5m 30s
+	Train Loss: 24.714 | Train PPL: 5.412E+10
+	 Val. Loss: 65.059 |  Val. PPL: 1.798E+28
+Saving model
+Epoch: 07 | Time: 5m 28s
+	Train Loss: 24.216 | Train PPL: 3.289E+10
+	 Val. Loss: 64.847 |  Val. PPL: 1.455E+28
+Saving model
+Epoch: 08 | Time: 5m 32s
+	Train Loss: 24.247 | Train PPL: 3.391E+10
+	 Val. Loss: 64.688 |  Val. PPL: 1.241E+28
+Saving model
+Size of vocabulary: 42392
+Epoch: 09 | Time: 5m 28s
+	Train Loss: 23.726 | Train PPL: 2.015E+10
+	 Val. Loss: 64.540 |  Val. PPL: 1.070E+28
+Saving model
+Epoch: 01 | Time: 3m 56s
+	Train Loss: 31.720 | Train PPL: 5.966E+13
+	 Val. Loss: 71.716 |  Val. PPL: 1.400E+31
+Saving model
+Epoch: 10 | Time: 5m 28s
+	Train Loss: 23.605 | Train PPL: 1.785E+10
+	 Val. Loss: 64.379 |  Val. PPL: 9.110E+27
+Saving model
+Size of vocabulary: 42392
+Epoch: 02 | Time: 3m 53s
+	Train Loss: 27.539 | Train PPL: 9.124E+11
+	 Val. Loss: 68.236 |  Val. PPL: 4.312E+29
+Saving model
+Epoch: 01 | Time: 3m 52s
+	Train Loss: 31.415 | Train PPL: 4.398E+13
+	 Val. Loss: 71.524 |  Val. PPL: 1.155E+31
+Saving model
+Epoch: 11 | Time: 5m 29s
+	Train Loss: 23.493 | Train PPL: 1.595E+10
+	 Val. Loss: 64.321 |  Val. PPL: 8.595E+27
+Saving model
+Epoch: 03 | Time: 3m 53s
+	Train Loss: 26.313 | Train PPL: 2.676E+11
+	 Val. Loss: 66.809 |  Val. PPL: 1.035E+29
+Saving model
