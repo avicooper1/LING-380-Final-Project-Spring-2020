@@ -1,17 +1,115 @@
 Size of vocabulary: 42392
-Epoch: 01 | Time: 4m 6s
-	Train Loss: 60.832 | Train PPL: 2.625E+26
-	 Val. Loss: 154.657 |  Val. PPL: 1.468E+67
+Epoch: 01 | Time: 3m 49s
+	Train Loss: 31.840 | Train PPL: 6.731E+13
+	 Val. Loss: 73.384 |  Val. PPL: 7.420E+31
 Saving model
-Epoch: 02 | Time: 4m 5s
-	Train Loss: 60.596 | Train PPL: 2.073E+26
-	 Val. Loss: 154.625 |  Val. PPL: 1.421E+67
+Epoch: 02 | Time: 3m 52s
+	Train Loss: 28.584 | Train PPL: 2.592E+12
+	 Val. Loss: 70.540 |  Val. PPL: 4.317E+30
 Saving model
-Epoch: 03 | Time: 4m 9s
-	Train Loss: 61.102 | Train PPL: 3.437E+26
-	 Val. Loss: 154.603 |  Val. PPL: 1.391E+67
+Epoch: 03 | Time: 3m 48s
+	Train Loss: 27.036 | Train PPL: 5.513E+11
+	 Val. Loss: 69.055 |  Val. PPL: 9.779E+29
 Saving model
-Epoch: 04 | Time: 4m 5s
-	Train Loss: 60.658 | Train PPL: 2.206E+26
-	 Val. Loss: 154.577 |  Val. PPL: 1.355E+67
+Epoch: 04 | Time: 3m 50s
+	Train Loss: 26.533 | Train PPL: 3.336E+11
+	 Val. Loss: 68.264 |  Val. PPL: 4.433E+29
 Saving model
+Epoch: 05 | Time: 3m 50s
+	Train Loss: 26.256 | Train PPL: 2.529E+11
+	 Val. Loss: 67.876 |  Val. PPL: 3.008E+29
+Saving model
+Epoch: 06 | Time: 3m 47s
+	Train Loss: 25.747 | Train PPL: 1.520E+11
+	 Val. Loss: 67.409 |  Val. PPL: 1.886E+29
+Saving model
+Epoch: 07 | Time: 3m 48s
+	Train Loss: 25.541 | Train PPL: 1.237E+11
+	 Val. Loss: 67.111 |  Val. PPL: 1.400E+29
+Saving model
+Epoch: 08 | Time: 3m 46s
+	Train Loss: 25.127 | Train PPL: 8.177E+10
+	 Val. Loss: 66.918 |  Val. PPL: 1.154E+29
+Saving model
+Epoch: 09 | Time: 3m 45s
+	Train Loss: 24.875 | Train PPL: 6.352E+10
+	 Val. Loss: 66.774 |  Val. PPL: 9.991E+28
+Saving model
+Epoch: 10 | Time: 3m 45s
+	Train Loss: 24.658 | Train PPL: 5.114E+10
+	 Val. Loss: 66.654 |  Val. PPL: 8.859E+28
+Saving model
+Epoch: 11 | Time: 3m 46s
+	Train Loss: 24.580 | Train PPL: 4.732E+10
+	 Val. Loss: 66.494 |  Val. PPL: 7.550E+28
+Saving model
+Epoch: 12 | Time: 3m 46s
+	Train Loss: 24.564 | Train PPL: 4.656E+10
+	 Val. Loss: 66.449 |  Val. PPL: 7.216E+28
+Saving model
+Epoch: 13 | Time: 3m 46s
+	Train Loss: 24.377 | Train PPL: 3.864E+10
+	 Val. Loss: 66.362 |  Val. PPL: 6.616E+28
+Saving model
+Epoch: 14 | Time: 3m 45s
+	Train Loss: 24.221 | Train PPL: 3.303E+10
+	 Val. Loss: 66.281 |  Val. PPL: 6.105E+28
+Saving model
+Epoch: 15 | Time: 3m 48s
+	Train Loss: 24.250 | Train PPL: 3.402E+10
+	 Val. Loss: 66.326 |  Val. PPL: 6.385E+28
+EarlyStopping counter: 1 out of 3
+Epoch: 16 | Time: 3m 48s
+	Train Loss: 24.252 | Train PPL: 3.407E+10
+	 Val. Loss: 66.234 |  Val. PPL: 5.821E+28
+Saving model
+Epoch: 17 | Time: 3m 47s
+	Train Loss: 24.113 | Train PPL: 2.967E+10
+	 Val. Loss: 66.136 |  Val. PPL: 5.277E+28
+Saving model
+Epoch: 18 | Time: 3m 48s
+	Train Loss: 23.919 | Train PPL: 2.444E+10
+	 Val. Loss: 66.091 |  Val. PPL: 5.046E+28
+Saving model
+Epoch: 19 | Time: 3m 54s
+	Train Loss: 24.228 | Train PPL: 3.328E+10
+	 Val. Loss: 66.249 |  Val. PPL: 5.911E+28
+EarlyStopping counter: 1 out of 3
+Epoch: 20 | Time: 3m 52s
+	Train Loss: 23.996 | Train PPL: 2.640E+10
+	 Val. Loss: 66.104 |  Val. PPL: 5.112E+28
+EarlyStopping counter: 2 out of 3
+Epoch: 21 | Time: 3m 52s
+	Train Loss: 23.900 | Train PPL: 2.396E+10
+	 Val. Loss: 66.091 |  Val. PPL: 5.045E+28
+Saving model
+Epoch: 22 | Time: 3m 53s
+	Train Loss: 23.978 | Train PPL: 2.591E+10
+	 Val. Loss: 66.079 |  Val. PPL: 4.988E+28
+Saving model
+Epoch: 23 | Time: 3m 50s
+	Train Loss: 23.722 | Train PPL: 2.006E+10
+	 Val. Loss: 66.029 |  Val. PPL: 4.744E+28
+Saving model
+Epoch: 24 | Time: 3m 51s
+	Train Loss: 23.771 | Train PPL: 2.106E+10
+	 Val. Loss: 65.992 |  Val. PPL: 4.568E+28
+Saving model
+Epoch: 25 | Time: 3m 53s
+	Train Loss: 23.821 | Train PPL: 2.214E+10
+	 Val. Loss: 65.971 |  Val. PPL: 4.476E+28
+Saving model
+Epoch: 26 | Time: 3m 51s
+	Train Loss: 23.626 | Train PPL: 1.823E+10
+	 Val. Loss: 65.988 |  Val. PPL: 4.550E+28
+EarlyStopping counter: 1 out of 3
+Epoch: 27 | Time: 3m 52s
+	Train Loss: 23.680 | Train PPL: 1.924E+10
+	 Val. Loss: 66.020 |  Val. PPL: 4.698E+28
+EarlyStopping counter: 2 out of 3
+Epoch: 28 | Time: 3m 52s
+	Train Loss: 23.647 | Train PPL: 1.862E+10
+	 Val. Loss: 65.975 |  Val. PPL: 4.496E+28
+EarlyStopping counter: 3 out of 3
+Early stopping, reloading checkpoint model
+| Test Loss: 65.379 | Test PPL: 2.477E+28 |
