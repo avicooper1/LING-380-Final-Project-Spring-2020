@@ -36,6 +36,7 @@ class LanguageModel(nn.Module):
         elif(self.rnn_type == "LSTM"):
             self.rnn = nn.LSTM(embedding_dim, hidden_dim)
         elif(self.rnn_type == "SPINN"):
+            self.linear_encoder = Linear(self.embedding_dim, self.embedding_dim * 2)
             self.rnn = SPINN(embedding_dim)
         else:
             raise ValueError("Please choose either SRN, GRU, LSTM or SPINN as RNN type")
@@ -53,7 +54,7 @@ class LanguageModel(nn.Module):
         if self.rnn_type != "SPINN":
             output, hidden = self.rnn(embedded)
         else:
-            prem_embed = Linear(self.embedding_dim, self.embedding_dim * 2)(embedded)
+            prem_embed = self.linear_encoder(embedded)
             output, hidden = self.rnn(prem_embed, input.premise_transitions if hasattr(input, 'premise_transitions') else None)
 
         output = self.out(output)
