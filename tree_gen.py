@@ -3,6 +3,8 @@ import logging
 import tools
 from nltk import Tree
 from functools import reduce
+import json
+import tqdm
 
 def gen_tikz_qtree(parse):
     parse = parse.replace('(', '[.')
@@ -27,15 +29,20 @@ def gen_binary_parse(parse, tree):
     btu = str(bt).replace("'", "").replace(',', '').replace('(', '( ').replace(')', ' )')
     return tree.preprocessing(tree.tokenize(btu))
 
-
-
 if __name__ == '__main__':
     sNLP = StanfordCoreNLP('stanford-corenlp-full-2020-04-20', port=9000, memory='8g', logging_level=logging.DEBUG)
-    result, sent_bad, sent_good, pre_bad, pre_good = tools.get_blimp_data('principle_A_c_command')
+    result, sent_bad, sent_good, pre_bad, pre_good = tools.get_blimp_data('principle_A_domain_2')
     from torchtext import datasets
     tree = datasets.nli.ShiftReduceField()
-    binary_parse = gen_binary_parse(sNLP.parse('Two women are embracing while holding to go packages.'), tree)
-    print(binary_parse)
+    good_parses = {}
+    bad_parses = {}
+    for sent in tqdm.tqdm(range(len(sent_bad))):
+        bad_parses[sent] = gen_binary_parse(sNLP.parse(sent_bad[sent]), tree)
+        good_parses[sent] = gen_binary_parse(sNLP.parse(sent_good[sent]), tree)
+    with open('domain2_bad_sent_parses.json', 'w') as fp:
+        json.dump(bad_parses, fp)
+    with open('domain2_good_sent_parses.json', 'w') as fp:
+        json.dump(good_parses, fp)
     sNLP.close()
 
 
