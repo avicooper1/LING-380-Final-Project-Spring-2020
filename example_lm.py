@@ -42,4 +42,4 @@ optimizer = optim.Adam(model.parameters())
 
 # train model
 n_epochs = args.epochs
-train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, args.model + '_checkpoint.pt', device=args.device, short_train=False, n_epochs=n_epochs, patience=3)
+train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, args.model + '_checkpoint.pt', device=args.device, short_train=True, n_epochs=n_epochs, patience=3)
