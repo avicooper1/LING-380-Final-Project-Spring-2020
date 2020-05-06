@@ -1,6 +1,8 @@
 from stanfordcorenlp import StanfordCoreNLP
 import logging
 import tools
+from nltk import Tree
+from functools import reduce
 
 def gen_tikz_qtree(parse):
     parse = parse.replace('(', '[.')
@@ -8,14 +10,32 @@ def gen_tikz_qtree(parse):
     parse = parse.replace('\n', '')
     return parse
 
+def binarize(tree):
+    """
+    Recursively turn a tree into a binary tree.
+    """
+    if isinstance(tree, str):
+        return tree
+    elif len(tree) == 1:
+        return binarize(tree[0])
+    else:
+        return reduce(lambda x, y: (binarize(x), binarize(y)), tree)
+
+def gen_binary_parse(parse, tree):
+    t = Tree.fromstring(parse)
+    bt = binarize(t)
+    btu = str(bt).replace("'", "").replace(',', '').replace('(', '( ').replace(')', ' )')
+    return tree.preprocessing(tree.tokenize(btu))
+
+
+
 if __name__ == '__main__':
     sNLP = StanfordCoreNLP('stanford-corenlp-full-2020-04-20', port=9000, memory='8g', logging_level=logging.DEBUG)
-    train_data, test_data, valid_data, text = tools.load_wikitext_103(128)
-    for batch in train_data:
-        parse_trees = sNLP.parse(batch)
-        with open('test.txt', 'a') as f:
-            f.write(parse_trees)
-        break
+    result, sent_bad, sent_good, pre_bad, pre_good = tools.get_blimp_data('principle_A_c_command')
+    from torchtext import datasets
+    tree = datasets.nli.ShiftReduceField()
+    binary_parse = gen_binary_parse(sNLP.parse('Two women are embracing while holding to go packages.'), tree)
+    print(binary_parse)
     sNLP.close()
 
 

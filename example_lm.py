@@ -12,6 +12,7 @@ parser.add_argument('--epochs', type=int, default=1)
 parser.add_argument('--model', type=str, default='SRN')
 parser.add_argument('--glove_set', type=str, default='6B')
 parser.add_argument('--device', type=str, default='cuda')
+parser.add_argument('--load_model', action='store_true', dest='load_model')
 
 args = parser.parse_args()
 
@@ -31,7 +32,7 @@ hidden_dim = 50
 
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj, stored_model=None)#args.model + '_checkpoint.pt') # can use GRU or LSTM instead of SRN
+model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj, stored_model=args.model + '_checkpoint.pt' if args.load_model else None) # can use GRU or LSTM instead of SRN
 # if GPU is available, change to make model run on GPU and make all tensors run there by default
 if torch.cuda.is_available() and not args.device == 'cpu':
     model.cuda(args.device)

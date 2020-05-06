@@ -58,4 +58,4 @@ class LanguageModel(nn.Module):
 
         output = self.out(output)
         
-        return output, hidden
+        return nn.Sigmoid(output), hidden
