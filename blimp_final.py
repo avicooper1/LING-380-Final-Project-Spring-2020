@@ -3,6 +3,7 @@ from model_lm import LanguageModel
 from tools import *
 from torchtext.vocab import GloVe
 from argparse import ArgumentParser
+import json
 
 parser = ArgumentParser(description='LING 380 Final Project')
 parser.add_argument('--model', type=str, default='SRN')
@@ -37,4 +38,37 @@ result, sent_bad, sent_good, pre_bad, pre_good = get_blimp_data('principle_A_c_c
 gcontext, gprefix = blimp_to_tensor(result, sent_good, model)
 bcontext, bprefix = blimp_to_tensor(result, sent_bad, model)
 correct, gp_count, bp_count, total = blimp_accuracy(model, gcontext, sent_good, sent_bad)
+
+
+with open('good_sent_parses.json') as f:
+  good_parses = json.load(f)
+
+with open('bad_sent_parses.json') as f:
+  bad_parses = json.load(f)
+
+gparse_list = list(good_parses.values())
+parses = parse_to_tensor(good_parse_list, model)
+
+def blimp_accuracy_parse(model: nn.Module, context: torch.Tensor, parse, good_prefix: torch.Tensor, bad_prefix: torch.Tensor):
+        
+    output = model(context, parse)[0].permute(1, 0, 2) # permute to be (n_batches, max_sentence_len, n_words)
+
+    correct = 0
+    gp_count = 0
+    bp_count = 0
+    total = 0
+    for i, gp_index, bp_index in zip(range(output.shape[0]), good_prefix, bad_prefix):
+        if(output[i, -1, gp_index] > output[i, -1, bp_index]):
+            correct += 1
+        total += 1
+
+        _, max_index = torch.max(output[i, -1, :], dim = 0)
+        if(max_index == gp_index):
+            gp_count += 1
+        elif(max_index == bp_index):
+            bp_count += 1
+
+    return correct, gp_count, bp_count, total
+
+blimp_accuracy_parse(model, sentence_context, parses, good_prefix, bad_prefix)
 import pdb; pdb.set_trace()
