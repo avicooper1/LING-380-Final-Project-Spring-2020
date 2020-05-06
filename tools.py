@@ -149,3 +149,24 @@ def blimp_accuracy(model: nn.Module, context: torch.Tensor, good_prefix: torch.T
             bp_count += 1
 
     return correct, gp_count, bp_count, total
+
+def parse_to_tensor(parse_list: List, model: nn.Module) -> torch.Tensor:
+    
+    index_list = []
+    max_len = 0    
+    for sentence in parse_list:
+        if(len(sentence) > max_len):
+            max_len = len(sentence)
+        
+        curr_sentence = []  
+        for word in sentence:
+            curr_sentence.append(2 if word == "reduce" else 3)
+        index_list.append(curr_sentence)
+        
+    pad_index = model.text_field.vocab.stoi['<pad>']
+    for sentence_index in index_list:
+        while(len(sentence_index) < max_len):
+            sentence_index.append(pad_index)
+
+    context_index_tensor = torch.FloatTensor(index_list).T
+    return context_index_tensor.long()
