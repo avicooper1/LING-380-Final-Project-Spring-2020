@@ -35,7 +35,7 @@ if torch.cuda.is_available() and not args.device == 'cpu':
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
     
 # load model from checkpoint
-model.load_state_dict(torch.load(args.model + "_checkpoint.pt"))
+model.load_state_dict(torch.load('model_checkpoints/' + args.model + "_checkpoint.pt"))
 model = model.to(args.device)
 
 # extract data from BLiMP
