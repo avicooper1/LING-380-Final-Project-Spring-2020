@@ -117,7 +117,28 @@ def blimp_to_tensor(sentence_list: List, prefix_list: List, model: nn.Module) ->
     
     return context_index_tensor.long(), prefix_index_tensor.long()
 
-def blimp_accuracy(model: nn.Module, context: torch.Tensor, good_prefix: torch.Tensor, bad_prefix: torch.Tensor) -> \
+def parse_to_tensor(parse_list: List, model: nn.Module) -> torch.Tensor:
+    
+    index_list = []
+    max_len = 0    
+    for sentence in parse_list:
+        if(len(sentence) > max_len):
+            max_len = len(sentence)
+        
+        curr_sentence = []  
+        for word in sentence:
+            curr_sentence.append(2 if word == "reduce" else 3)
+        index_list.append(curr_sentence)
+        
+    pad_index = model.text_field.vocab.stoi['<pad>']
+    for sentence_index in index_list:
+        while(len(sentence_index) < max_len):
+            sentence_index.append(pad_index)
+
+    context_index_tensor = torch.FloatTensor(index_list).T
+    return context_index_tensor.long()
+
+def blimp_accuracy_context(model: nn.Module, context: torch.Tensor, good_prefix: torch.Tensor, bad_prefix: torch.Tensor) -> \
         Tuple[int, int, int, int]:
         
     """
@@ -150,23 +171,23 @@ def blimp_accuracy(model: nn.Module, context: torch.Tensor, good_prefix: torch.T
 
     return correct, gp_count, bp_count, total
 
-def parse_to_tensor(parse_list: List, model: nn.Module) -> torch.Tensor:
+def blimp_accuracy_parse(model: nn.Module, cont_parse_input: Tuple, good_prefix: torch.Tensor, bad_prefix: torch.Tensor):
     
-    index_list = []
-    max_len = 0    
-    for sentence in parse_list:
-        if(len(sentence) > max_len):
-            max_len = len(sentence)
-        
-        curr_sentence = []  
-        for word in sentence:
-            curr_sentence.append(2 if word == "reduce" else 3)
-        index_list.append(curr_sentence)
-        
-    pad_index = model.text_field.vocab.stoi['<pad>']
-    for sentence_index in index_list:
-        while(len(sentence_index) < max_len):
-            sentence_index.append(pad_index)
+    output = model(cont_parse_input)[0].permute(1, 0, 2) # permute to be (n_batches, max_sentence_len, n_words)
 
-    context_index_tensor = torch.FloatTensor(index_list).T
-    return context_index_tensor.long()
+    correct = 0
+    gp_count = 0
+    bp_count = 0
+    total = 0
+    for i, gp_index, bp_index in zip(range(output.shape[0]), good_prefix, bad_prefix):
+        if(output[i, -1, gp_index] > output[i, -1, bp_index]):
+            correct += 1
+        total += 1
+
+        _, max_index = torch.max(output[i, -1, :], dim = 0)
+        if(max_index == gp_index):
+            gp_count += 1
+        elif(max_index == bp_index):
+            bp_count += 1
+
+    return correct, gp_count, bp_count, total
