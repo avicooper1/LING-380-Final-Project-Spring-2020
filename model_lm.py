@@ -46,8 +46,16 @@ class LanguageModel(nn.Module):
         if stored_model is not None: self.load_state_dict(torch.load(stored_model))
         
     def forward(self, input):
+        if hasattr(input, "premise_transitions"):
+            transitions = input.premise_transitions
+        else:
+            transitions = None
+        
         if hasattr(input, "premise"):
             embedded = self.embedding(input.premise[0])
+        elif type(input) == tuple:
+            embedded = self.embedding(input[0])
+            transitions = input[1]
         else:
             embedded = self.embedding(input)
             
@@ -55,7 +63,7 @@ class LanguageModel(nn.Module):
             output, hidden = self.rnn(embedded)
         else:
             prem_embed = self.linear_encoder(embedded)
-            output, hidden = self.rnn(prem_embed, input.premise_transitions if hasattr(input, 'premise_transitions') else None)
+            output, hidden = self.rnn(prem_embed, transitions if transitions is not None else None)
 
         output = self.out(output)
         
