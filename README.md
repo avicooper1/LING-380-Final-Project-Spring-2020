@@ -2,7 +2,7 @@
 
 ## Training the models
 
-To train the models, uncomment the desired model from run_experiment.sh, then submit a job via submit_experiment.sh. The file example_lm.py contains the code for loading the SNLI data, defining the model, and training it.
+To train the models, uncomment the desired model from run_experiment.sh, and then if submitting a job to a Slurm cluster, (like the one maintained by the Yale HPC Center,) use submit_experiment.sh. The file example_lm.py contains the code for loading the SNLI data, defining the model, and training it.
 
 ## Testing the models
 
