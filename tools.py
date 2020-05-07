@@ -118,6 +118,13 @@ def blimp_to_tensor(sentence_list: List, prefix_list: List, model: nn.Module) ->
     return context_index_tensor.long(), prefix_index_tensor.long()
 
 def parse_to_tensor(parse_list: List, model: nn.Module) -> torch.Tensor:
+    """
+    Converts list of parses (i.e. list of "shifts" and "reduces") to tensor which can be fed to model
+    
+    :param parse_list: List of parses of BLiMP data
+    :param model: Model being used (parameter is here to use the model's text field for tokenization)
+    :return: parse tensor
+    """
     
     index_list = []
     max_len = 0    
@@ -142,7 +149,7 @@ def blimp_accuracy_context(model: nn.Module, context: torch.Tensor, good_prefix:
         Tuple[int, int, int, int]:
         
     """
-    Evalutes model accuracy on a given BLiMP dataset
+    Evalutes model accuracy on a given BLiMP dataset. Only use for SRN, GRU, or LSTM. For SPINN, use blimp_accuracy_parses.
     
     :param model: The model used to predict the next word
     :param context: Tensor of sentence context to the desired prefix, as returned from blimp_to_tensor
@@ -172,6 +179,17 @@ def blimp_accuracy_context(model: nn.Module, context: torch.Tensor, good_prefix:
     return correct, gp_count, bp_count, total
 
 def blimp_accuracy_parse(model: nn.Module, cont_parse_input: Tuple, good_prefix: torch.Tensor, bad_prefix: torch.Tensor):
+    """
+    Evalutes model accuracy on a given BLiMP dataset. Only use for SPINN
+    
+    :param model: The model used to predict the next word
+    :param cont_parse_input: Tuple consisting of (context_tensor, parse_tensor) to be fed into model
+    :param good_prefix, bad_prefix: Tensors of indices of the good (correct) and bad (incorrect) prefixes, also from blimp_to_tensor
+    :return correct: Number of times where the model probability for good prefix > probability for bad prefix
+    :return gp_count: Number of times where the most probable word was the good prefix
+    :return bp_count: Number of times where the most probable word was the bad prefix
+    :return total: Total guesses
+    """
     
     output = model(cont_parse_input)[0].permute(1, 0, 2) # permute to be (n_batches, max_sentence_len, n_words)
 
