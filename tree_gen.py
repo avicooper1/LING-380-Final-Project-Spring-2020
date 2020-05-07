@@ -39,9 +39,9 @@ if __name__ == '__main__':
     for sent in tqdm.tqdm(range(len(sent_bad))):
         bad_parses[sent] = gen_binary_parse(sNLP.parse(sent_bad[sent]), tree)
         good_parses[sent] = gen_binary_parse(sNLP.parse(sent_good[sent]), tree)
-    with open('domain2_bad_sent_parses.json', 'w') as fp:
+    with open('blimp_transitions/domain2_bad_sent_parses.json', 'w') as fp:
         json.dump(bad_parses, fp)
-    with open('domain2_good_sent_parses.json', 'w') as fp:
+    with open('blimp_transitions/domain2_good_sent_parses.json', 'w') as fp:
         json.dump(good_parses, fp)
     sNLP.close()
 

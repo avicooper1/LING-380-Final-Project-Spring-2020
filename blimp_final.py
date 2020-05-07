@@ -50,10 +50,10 @@ _, bprefix = blimp_to_tensor(result, sent_bad, model)
 # correct, gp_count, bp_count, total = blimp_accuracy_context(model, gcontext, sent_good, sent_bad) 
 
 # if you are testing SPINN, continue here
-with open('good_sent_parses.json') as f:
+with open('blimp_transitions/good_sent_parses.json') as f:
   good_parses = json.load(f)
 
-with open('bad_sent_parses.json') as f:
+with open('blimp_transitions/bad_sent_parses.json') as f:
   bad_parses = json.load(f)
 
 gparse_list = list(good_parses.values())
