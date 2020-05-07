@@ -36,12 +36,15 @@ if torch.cuda.is_available() and not args.device == 'cpu':
     
 # load model from checkpoint
 model.load_state_dict(torch.load(args.model + "_checkpoint.pt"))
-model = model.to(device)
+model = model.to(args.device)
 
 # extract data from BLiMP
 result, sent_bad, sent_good, pre_bad, pre_good = get_blimp_data('principle_A_c_command')
 context, gprefix = blimp_to_tensor(result, sent_good, model)
 _, bprefix = blimp_to_tensor(result, sent_bad, model)
+
+# if running on GPU, you may need to move the above tensors to the GPU by uncommenting this code:
+# context, gprefix, bprefix = context.cuda(), gprefix.cuda(), bprefix.cuda()
 
 # if you are testing an SRN, GRU, or LSTM, uncomment and run the next line. then, ignore the rest of this code
 # correct, gp_count, bp_count, total = blimp_accuracy_context(model, gcontext, sent_good, sent_bad) 
@@ -55,6 +58,9 @@ with open('bad_sent_parses.json') as f:
 
 gparse_list = list(good_parses.values())
 parses = parse_to_tensor(good_parse_list, model)
+
+# as before, if running on GPU, you may need to uncomment this code
+# parses = parses.cuda()
 
 cont_parse_input = (context, parses)
 
