@@ -33,14 +33,20 @@ model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_o
 if torch.cuda.is_available() and not args.device == 'cpu':
     model.cuda(args.device)
     torch.set_default_tensor_type('torch.cuda.FloatTensor')
+    
+# load model from checkpoint
+model.load_state_dict(torch.load(args.model + "_checkpoint.pt"))
+model = model.to(device)
 
+# extract data from BLiMP
 result, sent_bad, sent_good, pre_bad, pre_good = get_blimp_data('principle_A_c_command')
 context, gprefix = blimp_to_tensor(result, sent_good, model)
 _, bprefix = blimp_to_tensor(result, sent_bad, model)
-#correct, gp_count, bp_count, total = blimp_accuracy_context(model, gcontext, sent_good, sent_bad) 
-# above line only works for SRN, GRU, LSTM testing
 
-# from here, this stuff is to run SPINN testing
+# if you are testing an SRN, GRU, or LSTM, uncomment and run the next line. then, ignore the rest of this code
+# correct, gp_count, bp_count, total = blimp_accuracy_context(model, gcontext, sent_good, sent_bad) 
+
+# if you are testing SPINN, continue here
 with open('good_sent_parses.json') as f:
   good_parses = json.load(f)
 
