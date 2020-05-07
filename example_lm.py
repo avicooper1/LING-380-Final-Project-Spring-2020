@@ -6,6 +6,7 @@ import train_lm
 from tools import load_snli
 from torchtext.vocab import GloVe
 from argparse import ArgumentParser
+from os import path
 
 parser = ArgumentParser(description='LING 380 Final Project')
 parser.add_argument('--epochs', type=int, default=1)
@@ -32,7 +33,13 @@ hidden_dim = 50
 
 pad_idx = text_field.vocab.stoi['<pad>']
 criterion = nn.CrossEntropyLoss(ignore_index=pad_idx)
-model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj, stored_model=args.model + '_checkpoint.pt' if args.load_model else None) # can use GRU or LSTM instead of SRN
+checkpoint_location = 'model_checkpoints' + args.model + '_checkpoint.pt'
+if args.load_model:
+    if not path.exists(checkpoint_location):
+        print('Attempting to load checkpoint from: {} however no file exists at this location'.format(checkpoint_location))
+        exit()
+    print("Loading model from: {}".format(checkpoint_location))
+model = LanguageModel(text_field, embedding_dim, hidden_dim, args.model, glove_obj=glove_obj, stored_model=checkpoint_location if args.load_model else None) # can use GRU or LSTM instead of SRN
 # if GPU is available, change to make model run on GPU and make all tensors run there by default
 if torch.cuda.is_available() and not args.device == 'cpu':
     model.cuda(args.device)
@@ -43,4 +50,4 @@ optimizer = optim.Adam(model.parameters())
 
 # train model
 n_epochs = args.epochs
-train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, args.model + '_checkpoint.pt', device=args.device, short_train=True, n_epochs=n_epochs, patience=3)
+train_lm.train(model, train_iter, val_iter, test_iter, optimizer, criterion, checkpoint_location, device=args.device, short_train=True, n_epochs=n_epochs, patience=3)
